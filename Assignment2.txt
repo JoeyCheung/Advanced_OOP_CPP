@@ -1,0 +1,6 @@
+((n&(n-1)) == 0) 
+
+This is bit manipulation and unset the lower set bit of n
+in binary: XXX10000 -> XXX00000
+
+So ((n&(n-1)) == 0) for 0 and all powers of 2 therefore yes, she is correct in her claim that "this returns true if n is either zero or a power of 2"
