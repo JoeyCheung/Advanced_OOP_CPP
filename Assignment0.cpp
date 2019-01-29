@@ -2,13 +2,13 @@
 using namespace std;
 
 template<typename T>
-int sum(T v) {
-    return v;
+int sum(T d) {
+    return d;
 }
 
 template<typename T, typename... Types>
-int sum(T v, Types&&... others) {
-    return v + sum(others...);
+int sum(T d, Types&&... variables) {
+    return v + sum(variables...);
 }
 
 int main() {
