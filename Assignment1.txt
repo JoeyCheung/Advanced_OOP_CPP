@@ -2,3 +2,9 @@ The reason why some compilers work is because of the preprocess, compile, then l
 
 
 This is the source that I used: https://www.toptal.com/c-plus-plus/c-plus-plus-understanding-compilation
+
+EDIT!
+
+This was not the answer the professor wanted even though it was correct, but the answer that he wanted was that it was due to sequence pointers. 
+
+Here's the source involving it: https://en.wikipedia.org/wiki/Sequence_point
