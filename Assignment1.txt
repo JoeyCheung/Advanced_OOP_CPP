@@ -1,0 +1,10 @@
+The reason why some compilers work is because of the preprocess, compile, then link build pipeline. Function overloading isn't present in C but it is in C++, so there may be different calling conventions say between C and C++ for function headers. That being said if a function is compiled and uses a calling convention from C, but it actually uses C++, it will cause some unexpected results. Which is why some compilers can run the code properly, while others can't. To avoid this issue you can use header guards. So guard your headers, not your source file which won't be included from anywhere. Just header files.
+
+
+This is the source that I used: https://www.toptal.com/c-plus-plus/c-plus-plus-understanding-compilation
+
+EDIT!
+
+This was not the answer the professor wanted even though it was correct, but the answer that he wanted was that it was due to sequence pointers. 
+
+Here's the source involving it: https://en.wikipedia.org/wiki/Sequence_point
