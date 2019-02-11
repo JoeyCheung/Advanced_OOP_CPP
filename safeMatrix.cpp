@@ -4,7 +4,6 @@
 #include<cassert> 
 using namespace std;
 
-template <class T> class SA;
 template <class T> //forward declaration
 ostream& operator<<(ostream& os, SA<T> s);
 
