@@ -34,9 +34,7 @@ template <class T> class SA {
 	// single parameter constructor lets us
 	// create a SA almost like a "standard" one by writing
 	// SA x(10); and getting an array x indexed from 0 to 9
-	SA(int i){low = 0; high = i - 1;
-	p = new T[i];
-}
+	SA(int i){low = 0; high = i - 1; p = new T[i];}
 	// copy constructor for pass by value and
 	// initialization
 	SA(const SA & s){
@@ -80,10 +78,9 @@ template <class T> class SA {
 	// overloads << so we can directly print SAs
 	//template <class T>
 	friend ostream& operator<< <T> (ostream& os, SA<T> s);
-	};
+};
 	
-template <class T>
-ostream& operator<<(ostream& os, SA<T> s) {
+template <class T> ostream& operator<<(ostream& os, SA<T> s) {
     int size = s.high - s.low+1;
     for(int i = 0; i < size; i++)
     cout << s.p[i] << endl;
@@ -97,7 +94,6 @@ template<class M> class Matrix {
     int row, col, rowL, colL;
     
     public:
-    
         Matrix() {
             row = 1;
             col = 1;
