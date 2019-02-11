@@ -129,35 +129,14 @@ template<class M> class Matrix {
             return *matrix[i];
         }
         
-        Matrix &operator=(Matrix<M> s) {
-            if (this == &s) {
-                return *this;
-            }
-            delete [] matrix;
-            row = s.row;
-            col = s.col;
-            rowL = s.rowL;
-            colL = s.colL;
-            matrix = new SA<M> *[row];
-             
-            for (int i = 0; i < row; i++) {
-                matrix[i] = new SA<M> (col);
-            }
-            for (int i = rowL; i < row; i++) {
-                for (int j = colL; j < col; j++) {
-                    (*this)[i][j] = s[i][j];
-                }
-            }
-            return *this;
-        }
         Matrix<M> operator*(Matrix<M> a) {
                 
             if (row != a.col || col != a.row) {
                 cout << "Can't perform Matrix multiplication!" << endl;
             }
             Matrix<M> newMatrix(row, row, rowL, rowL);
+            
             int sum = 0;
-                
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
                     int sum = 0;
