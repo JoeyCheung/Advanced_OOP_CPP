@@ -10,7 +10,7 @@ public:
     
 public:
 
-    //Checks to see if it was already indexed and if not then adds the coefficient to the value
+    //Checks to see if it was already indexed and if true then adds the coefficient to the value
     bool indexed(int coefficient, int power) {
         map<int, int>::iterator iterator = polynomial.find(power);
         if (iterator != polynomial.end()) {
