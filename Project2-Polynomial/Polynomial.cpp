@@ -10,28 +10,31 @@ public:
     
 public:
 
-    bool checkIfMapped(int coefficient, int power) {
-        map<int, int>::iterator i = polynomial.find(power);
-        if (i != polynomial.end()) {
-            i->second += coefficient;
+    //Checks to see if it was already indexed and if not then adds the coefficient to the value
+    bool indexed(int coefficient, int power) {
+        map<int, int>::iterator iterator = polynomial.find(power);
+        if (iterator != polynomial.end()) {
+            iterator>second += coefficient;
             return true;
         }
         return false;
     }
 
+    // Checks if the variables have been mapped
     void mapVariables(int coefficient, int power) {
-        if (!(checkIfMapped(coefficient, power))) {
+        if (!(indexed(coefficient, power))) {
             polynomial[power] = {coefficient};
         }
     }
 
+    //
     Polynomial &operator+(const Polynomial &other) {
         Polynomial *temp = new Polynomial();
         for (auto i: this->polynomial) {
             temp->mapVariables(i.second, i.first);
         }
         for (auto k: other.polynomial) {
-            temp->mapVariables(k.second, k.first);
+            temp->mapVariables(j.second, j.first);
         }
         return *temp;
     }
@@ -41,8 +44,8 @@ public:
         for (auto i: this->polynomial) {
             temp->mapVariables(i.second, i.first);
         }
-        for (auto k: other.polynomial) {
-            temp->mapVariables((-1 * k.second), k.first);
+        for (auto j: other.polynomial) {
+            temp->mapVariables((-1 * j.second), j.first);
         }
         return *temp;
     }
@@ -50,8 +53,8 @@ public:
     Polynomial &operator*(const Polynomial &other) {
         Polynomial *temp = new Polynomial();
         for (auto i: this->polynomial) {
-            for (auto k: other.polynomial) {
-                temp->mapVariables((i.second * k.second), (i.first + k.first));
+            for (auto j: other.polynomial) {
+                temp->mapVariables((i.second * j.second), (i.first + j.first));
             }
         }
         return *temp;
