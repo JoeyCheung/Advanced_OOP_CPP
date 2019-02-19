@@ -29,37 +29,37 @@ public:
 
     //Adds the first polynomial to the second one which will naturally happen by the indexed method if it hasn't been mapped already
     Polynomial &operator+(const Polynomial &other) {
-        Polynomial *temp = new Polynomial();
+        Polynomial *sum = new Polynomial();
         for (auto i: this->polynomial) {
-            temp->mapVariables(i.second, i.first);
+            sum->mapVariables(i.second, i.first);
         }
         for (auto j: other.polynomial) {
-            temp->mapVariables(j.second, j.first);
+            sum->mapVariables(j.second, j.first);
         }
-        return *temp;
+        return *sum;
     }
 
     //This does the same thing except multiples the second value (coefficient) by -1 then adds the polynomials together
     Polynomial &operator-(const Polynomial &other) {
-        Polynomial *temp = new Polynomial();
+        Polynomial *difference = new Polynomial();
         for (auto i: this->polynomial) {
-            temp->mapVariables(i.second, i.first);
+            difference->mapVariables(i.second, i.first);
         }
         for (auto j: other.polynomial) {
-            temp->mapVariables((-1 * j.second), j.first);
+            difference->mapVariables((-1 * j.second), j.first);
         }
-        return *temp;
+        return *difference;
     }
 
     //Multiples the coefficients together then adds the power then checks if the variables have been mapped
     Polynomial &operator*(const Polynomial &other) {
-        Polynomial *temp = new Polynomial();
+        Polynomial *product = new Polynomial();
         for (auto i: this->polynomial) {
             for (auto j: other.polynomial) {
-                temp->mapVariables((i.second * j.second), (i.first + j.first));
+                product->mapVariables((i.second * j.second), (i.first + j.first));
             }
         }
-        return *temp;
+        return *product;
     }
 };
 
