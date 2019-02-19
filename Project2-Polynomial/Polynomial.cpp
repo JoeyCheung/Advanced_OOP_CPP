@@ -14,7 +14,7 @@ public:
     bool indexed(int coefficient, int power) {
         map<int, int>::iterator iterator = polynomial.find(power);
         if (iterator != polynomial.end()) {
-            iterator>second += coefficient;
+            iterator->second += coefficient;
             return true;
         }
         return false;
@@ -27,18 +27,19 @@ public:
         }
     }
 
-    //
+    //Adds the first polynomial to the second one which will naturally happen by the indexed method if it hasn't been mapped already
     Polynomial &operator+(const Polynomial &other) {
         Polynomial *temp = new Polynomial();
         for (auto i: this->polynomial) {
             temp->mapVariables(i.second, i.first);
         }
-        for (auto k: other.polynomial) {
+        for (auto j: other.polynomial) {
             temp->mapVariables(j.second, j.first);
         }
         return *temp;
     }
 
+    //This does the same thing except multiples the second value (coefficient) by -1 then adds the polynomials together
     Polynomial &operator-(const Polynomial &other) {
         Polynomial *temp = new Polynomial();
         for (auto i: this->polynomial) {
@@ -50,6 +51,7 @@ public:
         return *temp;
     }
 
+    //Multiples the coefficients together then adds the power then checks if the variables have been mapped
     Polynomial &operator*(const Polynomial &other) {
         Polynomial *temp = new Polynomial();
         for (auto i: this->polynomial) {
@@ -65,6 +67,9 @@ int main() {
     
     Polynomial polynomials[2], sum, difference, product;
     ifstream in("input.txt");
+    ofstream myFile;
+    myFile.open("output.txt");
+    
     string line;
     int count = 0, coefficient, power;
     while (getline(in, line)) {
@@ -78,9 +83,36 @@ int main() {
     }
     in.close();
     
-    ofstream myFile;
-    myFile.open("output.txt");
-    myFile << "First polynomial: \n\n";   
+    myFile << "First polynomial: \n\n";
+    
+    map<int, int>::iterator it;
+    for (it = polynomials[0].polynomial.begin(); it != polynomials[0].polynomial.end(); ++it) {
+        if (it->second != 0) {
+            if (it == polynomials[0].polynomial.begin()) {
+                myFile << it->second << "^" << it->first;
+            } else if (it->second < 0) {
+                myFile << " - " << (it->second * -1) << "^" << it->first;
+            } else {
+                myFile << " + " << it->second << "^" << it->first;
+            }
+        }
+    }
+    
+    myFile << "\n\nSecond polynomial: \n\n";
+    
+    for (it = polynomials[1].polynomial.begin(); it != polynomials[1].polynomial.end(); ++it) {
+        if (it->second != 0) {
+            if (it == polynomials[1].polynomial.begin()) {
+                myFile << it->second << "^" << it->first;
+            } else if (it->second < 0) {
+                myFile << " - " << (it->second * -1) << "^" << it->first;
+            } else {
+                myFile << " + " << it->second << "^" << it->first;
+            }
+        }
+    }
+    
+    myFile << "\n\nFirst canonical polynomial: \n\n";   
     
     map<int, int>::reverse_iterator rit;
     for (rit = polynomials[0].polynomial.rbegin(); rit != polynomials[0].polynomial.rend(); ++rit) {
@@ -95,7 +127,7 @@ int main() {
         }
     }
     
-    myFile << "\n\nSecond polynomial: \n\n";
+    myFile << "\n\nSecond canonical polynomial: \n\n";
     
     for (rit = polynomials[1].polynomial.rbegin(); rit != polynomials[1].polynomial.rend(); ++rit) {
         if (rit->second != 0) {
