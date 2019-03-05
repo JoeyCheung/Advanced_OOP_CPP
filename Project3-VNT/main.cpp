@@ -122,7 +122,20 @@ public:
         vnt[crow][ccol] = x;
         int *current = &vnt[crow][ccol];
         int *top, *left;
-
+        
+        if(ccol > 0){
+            while (ccol >= 1) {
+                left = &vnt[crow][ccol - 1];
+                if (*left > *current || *left == INT_MAX) {
+                    swap(*left, *current);
+                    ccol -= 1;
+                    current = left;
+                } else {
+                    break;
+                }//else
+            }//while
+        }//if curr_col
+        
         while(ccol >= 1 && crow >= 1) {
             top = &vnt[crow - 1][ccol];
             left = &vnt[crow][ccol - 1];
@@ -155,19 +168,6 @@ public:
                 }//else
             }//while
         }//if curr_row
-
-        if(ccol > 0){
-            while (ccol >= 1) {
-                left = &vnt[crow][ccol - 1];
-                if (*left > *current || *left == INT_MAX) {
-                    swap(*left, *current);
-                    ccol -= 1;
-                    current = left;
-                } else {
-                    break;
-                }//else
-            }//while
-        }//if curr_col
         
         if (colL + 1 == col) {
             colL = 0;
@@ -234,73 +234,34 @@ public:
         return min;
     }
 
-    void sort(int q[], int size){
-        for (int i = 0; i < size; ++i) {
-            this->add(q[i]);
+    bool find(int x) {
+        bool found = false;
+        int r, c;
+        r = 0;
+        for (r = 0; r < rowL; r++) {
+            c = rowL - 1;
+            while(vnt[r][c] < x) {
+                r++;
+            }
+            while(vnt[r][c] > x && vnt[r][0] < x) {
+                c--;
+                if(c < 0) break;
+            }
+            if(vnt[r][c] == x) {
+                found = true;
+                break;
+            }
         }
-        return;
+        return found;
     }
-
-//     bool find(int x) {
-//         bool found = false;
-//         if (rowL == 0 && colL == 0) {
-//             cout<<"VNT is empty x not found...\n";
-//             return found;
-//         }//if
-// 
-//         int crow = 0, ccol = col - 1;
-//         int *current = &vnt[crow][ccol];
-//         int *left, *bottom;
-//         while (crow < row - 1 && ccol > 0) {
-//             left = &vnt[crow][ccol - 1];
-//             bottom = &vnt[crow + 1][ccol];
-//             if (*current == x) {
-//                 found = true;
-//                 cout << x <<" found at: (" << crow << "," << ccol << ")\n";
-//                 return found;
-//             }else if (x > *current) {
-//                 crow += 1;
-//                 current = bottom;
-// 
-//             } else if (x < *current) {
-//                 ccol -= 1;
-//                 current = left;
-//             }
-//         }//while
-//         while (ccol > 0) {
-//             left = &vnt[crow][ccol - 1];
-//             if (x < *current) {
-//                 current = left;
-//                 ccol -= 1;
-//             } else if (x == *current) {
-//                 found = true;
-//                 cout << x <<" found at: (" << crow << "," << ccol << ")\n";
-//                 return found;
-//             }
-//         }//while
-//         while (crow < row - 1) {
-//             bottom = &vnt[crow + 1][ccol];
-//             if (x > *current) {
-//                 current = bottom;
-//                 crow += 1;
-//             } else if (x == *current) {
-//                 found = true;
-//                 cout << x <<" found at: (" << crow << "," << ccol << ")\n";
-//                 return found;
-//             }//else if
-//         }//while
-//         if (*current == x) {
-//             found = true;
-//             cout << x <<" found at: (" << crow << "," << ccol << ")\n";
-//             return found;
-//         }//if
-//         if (!found) {
-//             cout << x <<" is not in the matrix...\n";
-//         }//if
-//         return found;
-//     }
     
-    void printMatrix(){
+    void sort(int k[], int size){
+        for (int i = 0; i < size; ++i) {
+            this->add(k[i]);
+        }
+    }
+    
+    void print(){
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 if(vnt[i][j] == INT_MAX){
@@ -325,26 +286,28 @@ public:
 };
 
 int main() {
-    cout << "NOTE: # symbol represents INT_MAX.....\n\n";
-    VNT<int> a(5,7);
-    cout << "VNT A(empty): \n";
-    a.printMatrix();
+    cout << "# means INT_MAX";
+    VNT<int> a(4,4);
+    cout << "Empty matrix: \n";
+    a.print();
 
-    int q[15] = {17,12,1,99,81,-2,100, 59,0, 66, 210 ,-55, -1, 3, 5};
-    a.sort(q, (sizeof(q)/sizeof(*q)));
+    int array[15] = {15, 12, 82, -2, 10, -55, 77, 88, 29, 4, -10, 6, 61, 41, 0};
+    a.sort(array, (sizeof(array)/sizeof(*array)));
 
-    cout << "VNT A after sort() of q[15]: \n";
-    a.printMatrix();
+    cout << "Sort: \n";
+    a.print();
 
+    cout << "Add: \n";
     a.add(25);
-    
-    a.printMatrix();
+    a.print();
     
     cout << "Calling find() on VNT A: \n";
-//     a.find(-55);
-    cout << "\n";
+    cout << a.find(-55);
+    cout << "\n\n";
     
-    cout << a.getMin() << endl;
+    cout << "getMin once: ";
+    cout << a.getMin() << endl << endl;
+    cout << "getMin twice: ";
     cout << a.getMin() << endl;
 
     return 0;
