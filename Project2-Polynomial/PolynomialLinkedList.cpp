@@ -129,10 +129,10 @@ void polymult(struct Node *poly1, struct Node *poly2, struct Node *poly) {
     temp1 = poly1;
     temp2 = poly2;
 
-    while(temp1->next != NULL) {
-        while(temp2->next != NULL) {
-            poly->coefficient = temp1->coefficient * temp2->coefficient;
-            poly->power = temp1->power + temp2->power;
+    while(temp1) {
+        while(temp2) {
+            poly->coefficient = (temp1->coefficient) * (temp2->coefficient);
+            poly->power = (temp1->power) + (temp2->power);
             poly->next = (struct Node *)malloc(sizeof(struct Node)); 
             poly = poly->next; 
             poly->next = NULL;
@@ -149,8 +149,60 @@ struct sort_pred {
     }
 };
 
+void sort(struct Node* &start, struct Node* incoming){
+	Node* holder = (struct Node *)malloc(sizeof(struct Node));
+    holder->power = incoming->power;
+	holder->coefficient = incoming->coefficient;
+	holder->next = NULL;
+    
+	Node * current = (struct Node *)malloc(sizeof(struct Node)); 
+	current = start;
+    
+    if(!(current->next)){
+		if(current->power == holder->power){
+			current->coefficient = (current->coefficient) + (holder->coefficient);
+			return;
+		}
+		else{
+			current->next = holder;
+			return;
+		}
+	}//end*/
+	
+	if(current->power < holder->power){		
+		holder->next = current;
+		current->next = NULL;
+		start = holder;
+		return;
+	}
+	
+	if(current->power == incoming->power){
+		current->coefficient = (current->coefficient) + (holder->coefficient);
+		return;
+	}
+   
+	while(current -> next){
+		Node * temp = (struct Node *)malloc(sizeof(struct Node)); 
+		temp = current->next;
+        
+        if(holder->power > temp->power){
+			holder->next = temp;
+			current->next = holder;
+			return;
+		}
+		
+		if(holder->power == temp->power){
+			temp->coefficient = (temp->coefficient) + (holder->coefficient);
+			return;
+		}
+		
+		current = current->next;
+	}
+	current->next = holder;
+}
+
 int main() { 
-    struct Node *poly1 = NULL, *poly2 = NULL, *polya = NULL, *polys = NULL, *polym = NULL; 
+    struct Node *polyholder = NULL,*polywhat = NULL, *poly1 = NULL, *poly2 = NULL, *polya = NULL, *polys = NULL, *polym = NULL; 
     
     ifstream in("input.txt");
     ofstream myFile;
@@ -241,9 +293,23 @@ int main() {
     
     polya = (struct Node *)malloc(sizeof(struct Node)); 
     polys = (struct Node *)malloc(sizeof(struct Node)); 
+    polym = (struct Node *)malloc(sizeof(struct Node)); 
+    polyholder = (struct Node *)malloc(sizeof(struct Node)); 
+    polywhat= (struct Node *)malloc(sizeof(struct Node)); 
     
     polyadd(poly1, poly2, polya); 
     polysub(poly1, poly2, polys);
+    polymult(poly1, poly2, polyholder);
+    polywhat->coefficient =0;
+    polywhat->power = 0;
+    polywhat->next = 0;
+    polym->coefficient = 0;
+    polym->power = 0;
+    polym->next = 0;
+    while(polyholder){
+    	sort(polym, polyholder);
+    	polyholder = polyholder->next;
+    }
   
     myFile << "1st Polynomial: ";
     
@@ -286,6 +352,21 @@ int main() {
                 myFile << " + ";
         }
         polys = polys->next; 
+    } 
+    myFile << "\n\nMultiplied polynomial: "; 
+    
+    while(polym->next != NULL) { 
+        if(polym->coefficient == 0) {
+            myFile << "";
+            if(polym->next != NULL) 
+                myFile << "";
+        }
+        else {
+            myFile << polym->coefficient << "x^" << polym->power;
+            if(polym->next != NULL) 
+                myFile << " + ";
+        }
+        polym = polym->next; 
     } 
     
     return 0; 

@@ -5,3 +5,5 @@
 Added polynomial: 2x^9 + 30x^8 + 19x^7 + 40x^3 + -4x^3 + -18x^2 + -4x^2 + 10x^1 + -2x^0
 
 Subtracted polynomial: -22x^8 + 7x^7 + 
+
+Multiplied polynomial: 30x^17 + 123x^16 + 362x^15 + 78x^14 + 36x^12 + 518x^11 + 22x^10 + -61x^9 + 65x^8 + -19x^7 + 324x^6 + -396x^5 + 301x^4 + -146x^3 + 47x^2 + -10x^1 + 
