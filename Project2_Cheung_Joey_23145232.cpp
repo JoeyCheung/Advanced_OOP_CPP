@@ -78,17 +78,17 @@ void outputPolynomial() {
 
 void calculate() {
     Node *current = this->front;
-    Node *prev = this->front; 
+    Node *previous = this->front; 
 
 	while (current != nullptr) {
-        prev = current;
+        previous = current;
         current = current->n;//so it skips the dummy
         if (current->n == nullptr)break; 
         if (current->exponent == current->n->exponent && current->var == current->n->var) {
             Node *temp;
             temp = current->n;
             current->coefficient = current->coefficient + current->n->coefficient;
-            prev->n = current;
+            previous->n = current;
             current->n = current->n->n;
             delete temp;
         }
