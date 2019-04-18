@@ -22,10 +22,7 @@ public:
             indexOrNot = true;
         }
         
-        if (!indexOrNot) {
-            index[s] = {1, {row, col}};
-            return;
-        }
+        if (!indexOrNot) index[s] = {1, {row, col}};
     }
     
     void print() {
