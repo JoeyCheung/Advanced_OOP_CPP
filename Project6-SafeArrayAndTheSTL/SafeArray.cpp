@@ -106,6 +106,14 @@ int main() {
 	b[3] = 5; b[4] = 4; b[5] = 3;
 	for (int i = 0 ; i < 10; i++) a[i] = 10-i;
 	
+    cout << "Unsorted A" << endl;
+    
+    cout << a << endl;
+    
+    cout << "Unsorted B" << endl;
+    
+    cout << b << endl;
+    
     sort(a);
     sort(b);
     

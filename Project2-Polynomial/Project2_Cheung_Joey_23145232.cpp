@@ -205,7 +205,6 @@ void separate(char* arr, int n) {
                     }
                 }
             default:
-                cout<<"Not the correct input: " << arr[counter] <<endl;
                 break;
         }
         add_node:
